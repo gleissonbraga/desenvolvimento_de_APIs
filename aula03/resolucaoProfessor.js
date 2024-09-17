@@ -1,32 +1,67 @@
-let produtos = []
-let idGerador = 1
+let listaProdutos = [];
+let idGerador = 1;
 
-function listar(){
-    return produtos
+function listar() {
+    return listaProdutos;
 }
 
-function inserirProduto(produto) {
-    produto.id = idGerador++
-    produtos.push(produto)
+function inserir(produto) {
+    produto.id = idGerador++;
+    listaProdutos.push(produto);
 }
 
-function buscarPorId(id){
-    for(let produto of produtos){
-        if(produto.id == id){
-            return produto
+function buscarPorId(id) {
+    /*for(let produto of listaProdutos){
+        if(produto.id == id) {
+            return produto;
         }
-    } 
+    }*/
+    return (listaProdutos.find(
+        function(produto) {
+            return (produto.id == id);        
+        }
+    ));
+}
+
+function atualizar(id, produto) {
+    /*let indiceProduto = -1;
+    for(let indice in listaProdutos) {
+        if(produto.id == id){
+            indiceProduto = indice;
+        }
+    }
+    if(indiceProduto == -1) return;
+    //alterar o produto direto
+    listaProdutos[indiceProduto] = produto;*/
+
+    let indiceProduto = listaProdutos.findIndex(function(produto) {
+        return (produto.id == id);
+    })
+
+    if(indiceProduto == -1) return;
+    //alterar o produto direto
+    listaProdutos[indiceProduto] = produto;
+
+
+}
+
+function deletar(id){
+    listaProdutos.splice(indice, 1)
 }
 
 function main() {
-    inserirProduto({nome: "Arroz", categoria: "Alimento", preco: 4.7, id: 1})
-    inserirProduto({nome: "Suco de Laranja", categoria: "Bebida", preco: 7.5, id: 2})
-    inserirProduto({nome: "Feijão", categoria: "Alimento", preco: 6.5, id: 3})
-    inserirProduto({nome: "Coca cola", categoria: "Bebida", preco: 8.9, id: 4})
-    console.log(listar())
+    inserir({nome:"Arroz", categoria:"Alimento", preco:4.7});
+    inserir({nome:"Suco de Laranja", categoria:"Bebida", preco:7.5});
+    inserir({nome:"Feijao", categoria:"Alimento", preco:6.7});
+    inserir({nome:"Coca-cola", categoria:"Bebida", preco:8.9});
+    console.log(listar());
 
-    console.log("Produto [id=2]: ", buscarPorId(2))
+    console.log("Produto [id=2]: ", buscarPorId(2));
+
+    atualizar(4, {nome:"Coca-cola", categoria:"Bebida", preco: 8.5, id:4})
+
+    console.log(listar());
+    
 }
 
-main()
-
+main();
